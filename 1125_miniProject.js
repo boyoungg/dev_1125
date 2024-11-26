@@ -21,7 +21,43 @@ app.post('/join', (req, res) => {
 })
 
 app.post('/login', (req, res) => {
-    res.send("로그인임")
+    // userId가 db에 저장되어있는가?
+    const {userId, password} = req.body
+    var loginInfo = {} // 중괄호 있으면 텅비어도 값있는거임.
+
+    db.forEach(function(value, key) {
+        console.log(value.userId)
+        if(value.userId == userId) {
+            loginInfo = value
+        } 
+    })
+    
+    //id 관련 
+    if(existInfo(loginInfo)){
+        console.log("아이디 같은거 있엉!")
+        if (loginInfo.password === password) {
+            console.log("패스워드도 같아. 로그인 성공!")
+        } else {
+            console.log("패스워드 틀림. 비밀번호 확인해~")
+        }
+    } else {
+        console.log("아이디 확인요망")
+    }
+
+    // id 객체 빈 객체 인지 아닌지 확인
+    function existInfo(obj) {
+        if(Object.keys(obj).length) {
+            return true;
+        } else {
+            return false;
+        }
+    }
+
+    // pw가 일치하는가?
+
+
+
+
 })
 
 
